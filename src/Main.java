@@ -1,8 +1,11 @@
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String []args){
-        System.out.println("Hello World!\nMy Name is Vinesh S R");
-        variables();
+//        System.out.println("Hello World!\nMy Name is Vinesh S R");
+//        variables();
+        userInput();
     }
 
 
@@ -61,5 +64,15 @@ public class Main {
 
         System.out.println("My Name is"+name+" and age is "+age);
 
+    }
+
+//    Getting Input from the user
+    public static void userInput(){
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("What is your name ?");
+        String input = sc.nextLine();
+        System.out.println("Hi there "+input+"!");
+        sc.close();
     }
 }
