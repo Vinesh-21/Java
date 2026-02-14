@@ -9,6 +9,7 @@ public class Main {
     }
 
 
+
     public static void variables (){
 
         // Variables - Primitive and Reference
