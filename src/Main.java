@@ -6,7 +6,12 @@ public class Main {
 
 //        variables();
 //        userInput();
-        operators();
+//        operators();
+//        mathLibrary();
+//        stringMethods();
+//        conditionalStatements();
+//        switchStatement();
+        enhancedSwitchStatement();
 
     }
 
@@ -15,32 +20,7 @@ public class Main {
     // ==========================================================
     public static void variables (){
 
-        // Variables - Primitive and Reference
-
-        // Primitive - byte, short, int, long, float, double, char, boolean
-        // Primitive -> Stores actual value
-
-        // Reference - Strings, Arrays, Lists, Objects
-        // Reference -> Stores memory address (object stored in Heap)
-
-        // Primitive Data Types in Java (with size)
-
-        // byte    -> 1 byte  (8 bits)
-        // short   -> 2 bytes (16 bits)
-        // int     -> 4 bytes (32 bits)
-        // long    -> 8 bytes (64 bits)
-        // float   -> 4 bytes (32 bits)
-        // double  -> 8 bytes (64 bits)
-        // char    -> 2 bytes (16 bits, Unicode)
-        // boolean -> true/false (JVM dependent size)
-
-        // Step 1: Declare
-        int age;
-
-        // Step 2: Initialize
-        age = 23;
-
-        // Step 3: Declare + Initialize
+        int age = 23;
         String name = "Vinesh S R";
 
         System.out.println("My Name is " + name + " and age is " + age);
@@ -52,7 +32,6 @@ public class Main {
     // ==========================================================
     public static void userInput(){
 
-        // Scanner is used to take input from user
         Scanner sc = new Scanner(System.in);
 
         System.out.println("What is your name?");
@@ -68,77 +47,143 @@ public class Main {
     // ==========================================================
     public static void operators(){
 
-        // Operators in Java
-
-        // 1️⃣ Arithmetic Operators
-        // +  Addition
-        // -  Subtraction
-        // *  Multiplication
-        // /  Division
-        // %  Modulus (Remainder)
-
         int a = 10;
         int b = 5;
 
-        System.out.println("Arithmetic Operators:");
         System.out.println("Addition: " + (a + b));
         System.out.println("Subtraction: " + (a - b));
         System.out.println("Multiplication: " + (a * b));
         System.out.println("Division: " + (a / b));
         System.out.println("Modulus: " + (a % b));
+    }
 
 
-        // 2️⃣ Assignment Operators
-        // =   Assign
-        // +=  Add and assign
-        // -=  Subtract and assign
-        // *=  Multiply and assign
-        // /=  Divide and assign
+    // ==========================================================
+    // Math Library Method
+    // ==========================================================
+    public static void mathLibrary(){
 
-        int x = 20;
-        x += 10;  // x = x + 10
+        // Math class provides mathematical operations
 
-        System.out.println("\nAssignment Operator:");
-        System.out.println("Value of x after += 10: " + x);
+        int num1 = 25;
+        int num2 = 10;
 
-
-        // 3️⃣ Comparison (Relational) Operators
-        // ==  Equal to
-        // !=  Not equal to
-        // >   Greater than
-        // <   Less than
-        // >=  Greater than or equal
-        // <=  Less than or equal
-
-        System.out.println("\nComparison Operators:");
-        System.out.println("Is a == b? " + (a == b));
-        System.out.println("Is a != b? " + (a != b));
-        System.out.println("Is a > b? " + (a > b));
-        System.out.println("Is a < b? " + (a < b));
+        System.out.println("Maximum: " + Math.max(num1, num2));
+        System.out.println("Minimum: " + Math.min(num1, num2));
+        System.out.println("Square Root: " + Math.sqrt(64));
+        System.out.println("Power: " + Math.pow(2, 3));
+        System.out.println("Absolute Value: " + Math.abs(-20));
+        System.out.println("Random Number (0-1): " + Math.random());
+    }
 
 
-        // 4️⃣ Logical Operators
-        // &&  AND
-        // ||  OR
-        // !   NOT
+    // ==========================================================
+    // String Methods and Substring Method
+    // ==========================================================
+    public static void stringMethods(){
 
-        boolean condition1 = true;
-        boolean condition2 = false;
+        String text = "Java Programming";
 
-        System.out.println("\nLogical Operators:");
-        System.out.println("condition1 && condition2: " + (condition1 && condition2));
-        System.out.println("condition1 || condition2: " + (condition1 || condition2));
-        System.out.println("!condition1: " + (!condition1));
+        // Length of string
+        System.out.println("Length: " + text.length());
+
+        // Convert to upper case
+        System.out.println("Uppercase: " + text.toUpperCase());
+
+        // Convert to lower case
+        System.out.println("Lowercase: " + text.toLowerCase());
+
+        // Check if contains word
+        System.out.println("Contains 'Java'? " + text.contains("Java"));
+
+        // Index of character
+        System.out.println("Index of 'P': " + text.indexOf("P"));
+
+        // Substring (start index)
+        System.out.println("Substring from index 5: " + text.substring(5));
+
+        // Substring (start and end index)
+        System.out.println("Substring (0 to 4): " + text.substring(0, 4));
+    }
 
 
-        // 5️⃣ Increment & Decrement
-        // ++  Increase by 1
-        // --  Decrease by 1
+    // ==========================================================
+    // Conditional Statements
+    // ==========================================================
+    public static void conditionalStatements(){
 
-        int num = 5;
-        num++;  // num = num + 1
+        int age = 20;
 
-        System.out.println("\nIncrement Operator:");
-        System.out.println("Value after increment: " + num);
+        // Simple if
+        if(age >= 18){
+            System.out.println("You are an adult.");
+        }
+
+        // if-else
+        if(age >= 18){
+            System.out.println("Eligible to vote.");
+        } else {
+            System.out.println("Not eligible to vote.");
+        }
+
+        // Nested if-else
+        if(age >= 18){
+            if(age >= 60){
+                System.out.println("Senior Citizen.");
+            } else {
+                System.out.println("Adult but not senior.");
+            }
+        } else {
+            System.out.println("Minor.");
+        }
+    }
+
+
+    // ==========================================================
+    // Switch Statement (Traditional)
+    // ==========================================================
+    public static void switchStatement(){
+
+        int day = 3;
+
+        switch(day){
+            case 1:
+                System.out.println("Monday");
+                break;
+            case 2:
+                System.out.println("Tuesday");
+                break;
+            case 3:
+                System.out.println("Wednesday");
+                break;
+            default:
+                System.out.println("Invalid day");
+        }
+    }
+
+
+    // ==========================================================
+    // Enhanced Switch Statement (Java 14+)
+    // ==========================================================
+    public static void enhancedSwitchStatement(){
+
+        int day = 2;
+
+        switch(day){
+            case 1 -> System.out.println("Monday");
+            case 2 -> System.out.println("Tuesday");
+            case 3 -> System.out.println("Wednesday");
+            default -> System.out.println("Invalid day");
+        }
+
+        // Returning value using enhanced switch
+        String result = switch(day){
+            case 1 -> "Start of week";
+            case 2 -> "Second day";
+            case 3 -> "Midweek";
+            default -> "Unknown";
+        };
+
+        System.out.println("Meaning: " + result);
     }
 }
