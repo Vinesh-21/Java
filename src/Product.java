@@ -1,69 +1,73 @@
-public class Product {
+// ============================================================
+// PRODUCT.JAVA
+// ============================================================
+// TOPICS COVERED IN THIS FILE:
+//
+// 1. Class
+// 2. Encapsulation
+// 3. private fields
+// 4. Getters and Setters
+// 5. Constructors
+// 6. this keyword
+// 7. Abstraction
+// 8. Abstract method
+// 9. Method Overriding
+// 10. Object class methods
+//     - toString()
+//     - equals()
+//     - hashCode()
+// ============================================================
 
-    // ==================================================
-    // ENCAPSULATION
-    // ==================================================
-    // Product fields are private.
-    // They cannot be accessed directly from outside
-    // the Product class.
-    // ==================================================
+// CONCEPT: Abstraction
+// Product is abstract because we do not want to create a
+// generic Product object directly.
+//
+// Instead, Product is the parent of:
+// Laptop
+// Phone
+// GroceryProduct
+
+public abstract class Product {
+
+    // ========================================================
+    // CONCEPT: Encapsulation
+    // ========================================================
+    // Fields are private.
+    // Other classes cannot directly access them.
+    // They must use getters and setters.
 
     private int productId;
     private String productName;
     private double price;
     private int quantity;
 
-
-    // ==================================================
-    // final KEYWORD
-    // ==================================================
-    // MAX_PRODUCTS is a constant.
-    // Once assigned, its value cannot be changed.
-    // ==================================================
-
-    public static final int MAX_PRODUCTS = 100;
-
-
-    // ==================================================
-    // DEFAULT CONSTRUCTOR
-    // ==================================================
-    // Creates a Product object without providing values.
-    // ==================================================
+    // ========================================================
+    // CONCEPT: Constructor
+    // ========================================================
 
     public Product() {
     }
 
+    // ========================================================
+    // CONCEPT: Parameterized Constructor
+    // CONCEPT: this keyword
+    // ========================================================
 
-    // ==================================================
-    // PARAMETERIZED CONSTRUCTOR
-    // ==================================================
-    // Creates a Product object with values.
-    //
-    // this.productId → instance variable
-    // productId      → constructor parameter
-    //
-    // "this" refers to the current object.
-    // ==================================================
+    public Product(int productId,
+                   String productName,
+                   double price,
+                   int quantity) {
 
-    public Product(
-            int productId,
-            String productName,
-            double price,
-            int quantity) {
-
+        // 'this' refers to the current object.
         this.productId = productId;
         this.productName = productName;
         this.price = price;
         this.quantity = quantity;
     }
 
-
-    // ==================================================
-    // GETTERS
-    // ==================================================
-    // Used to access private fields from outside.
-    // This is part of ENCAPSULATION.
-    // ==================================================
+    // ========================================================
+    // CONCEPT: Getters
+    // ========================================================
 
     public int getProductId() {
         return productId;
@@ -81,12 +85,9 @@ public class Product {
         return quantity;
     }
 
-
-    // ==================================================
-    // SETTERS
-    // ==================================================
-    // Used to modify private fields.
-    // ==================================================
+    // ========================================================
+    // CONCEPT: Setters
+    // ========================================================
 
     public void setProductId(int productId) {
         this.productId = productId;
@@ -104,57 +105,27 @@ public class Product {
         this.quantity = quantity;
     }
 
+    // ========================================================
+    // CONCEPT: Abstraction
+    // ========================================================
+    // This method has no implementation in Product.
+    //
+    // Every child class must provide its own implementation.
 
-    // ==================================================
-    // PRODUCT METHOD
-    // ==================================================
-    // Displays common product information.
-    // ==================================================
+    public abstract double calculateFinalPrice();
 
-    public void displayDetails() {
-
-        System.out.println("ID       : " + productId);
-        System.out.println("Name     : " + productName);
-        System.out.println("Price    : ₹" + price);
-        System.out.println("Quantity : " + quantity);
-    }
-
-
-    // ==================================================
-    // PRODUCT METHOD
-    // ==================================================
-    // Inventory Value = price × quantity
-    // ==================================================
+    // ========================================================
+    // Normal method
+    // ========================================================
 
     public double getInventoryValue() {
 
         return price * quantity;
     }
 
-
-    // ==================================================
-    // METHOD
-    // ==================================================
-    // This method will be OVERRIDDEN by child classes.
-    //
-    // Product → normal product price
-    // Electronics → different calculation
-    // Laptop → different calculation
-    // Phone → different calculation
-    // Grocery → normal price
-    // ==================================================
-
-    public double calculateFinalPrice() {
-
-        return price;
-    }
-
-
-    // ==================================================
-    // PRODUCT METHOD
-    // ==================================================
-    // Determines the stock status.
-    // ==================================================
+    // ========================================================
+    // Stock status
+    // ========================================================
 
     public String getStockStatus() {
 
@@ -172,17 +143,24 @@ public class Product {
         }
     }
 
+    // ========================================================
+    // CONCEPT: Method Overriding
+    // ========================================================
+    // Child classes can override displayDetails().
 
-    // ==================================================
-    // OBJECT CLASS
-    // ==================================================
-    // Every Java class ultimately inherits from Object.
-    //
-    // toString() is being OVERRIDDEN here.
-    //
-    // Instead of Java's default object representation,
-    // we provide meaningful Product information.
-    // ==================================================
+    public void displayDetails() {
+
+        System.out.println("ID       : " + productId);
+        System.out.println("Name     : " + productName);
+        System.out.println("Price    : ₹" + price);
+        System.out.println("Quantity : " + quantity);
+        System.out.println("Stock    : " + getStockStatus());
+    }
+
+    // ========================================================
+    // CONCEPT: Method Overriding
+    // Object.toString() is overridden here.
+    // ========================================================
 
     @Override
     public String toString() {
@@ -195,51 +173,38 @@ public class Product {
                 '}';
     }
 
-
-    // ==================================================
-    // OBJECT CLASS
-    // ==================================================
-    // equals() is being OVERRIDDEN.
+    // ========================================================
+    // CONCEPT: Method Overriding
+    // Object.equals() is overridden.
     //
-    // Our rule:
-    // Two products are considered equal if their
-    // product IDs are the same.
-    // ==================================================
+    // Two products are considered equal when their IDs
+    // are the same.
+    // ========================================================
 
     @Override
     public boolean equals(Object obj) {
 
-        // Same object reference
+        // Same object
         if (this == obj) {
-
             return true;
         }
 
-        // Check whether obj is a Product
+        // Object must be a Product
         if (!(obj instanceof Product)) {
-
             return false;
         }
 
-        // DOWNCASTING
-        // Object → Product
+        // CONCEPT: Downcasting
+        // Object -> Product
         Product other = (Product) obj;
 
         return this.productId == other.productId;
     }
 
-
-    // ==================================================
-    // OBJECT CLASS
-    // ==================================================
-    // hashCode() is being OVERRIDDEN.
-    //
-    // It uses the same product ID used by equals().
-    //
-    // Rule:
-    // If two objects are equal, they should have the
-    // same hash code.
-    // ==================================================
+    // ========================================================
+    // CONCEPT: Method Overriding
+    // Object.hashCode() is overridden.
+    // ========================================================
 
     @Override
     public int hashCode() {

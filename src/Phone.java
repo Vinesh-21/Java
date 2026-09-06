@@ -1,94 +1,74 @@
-// ======================================================
-// INHERITANCE
-// ======================================================
+// ============================================================
+// PHONE.JAVA
+// ============================================================
+// TOPICS COVERED:
 //
-// Product
-//    ↓
-// ElectronicsProduct
-//    ↓
-// Phone
-//
-// Phone IS-A ElectronicsProduct
-// Phone IS-A Product
-// ======================================================
+// 1. Inheritance
+// 2. super()
+// 3. this
+// 4. Method Overriding
+// 5. Polymorphism
+// ============================================================
 
 public class Phone extends ElectronicsProduct {
 
     private String operatingSystem;
 
-
-    // ==================================================
-    // DEFAULT CONSTRUCTOR
-    // ==================================================
+    // ========================================================
+    // Constructor
+    // ========================================================
 
     public Phone() {
 
         super();
     }
 
+    // ========================================================
+    // Parameterized Constructor
+    // ========================================================
 
-    // ==================================================
-    // PARAMETERIZED CONSTRUCTOR
-    // ==================================================
+    public Phone(int productId,
+                 String productName,
+                 double price,
+                 int quantity,
+                 int warrantyYears,
+                 String operatingSystem) {
 
-    public Phone(
-            int productId,
-            String productName,
-            double price,
-            int quantity,
-            int warrantyYears,
-            String operatingSystem) {
-
-
-        // ==================================================
-        // super()
-        // ==================================================
-        // Calls ElectronicsProduct constructor.
-        // ==================================================
-
-        super(
-                productId,
+        // CONCEPT: super()
+        super(productId,
                 productName,
                 price,
                 quantity,
-                warrantyYears
-        );
+                warrantyYears);
 
-
-        // this = current Phone object
-
+        // CONCEPT: this
         this.operatingSystem = operatingSystem;
     }
 
-
-    // ==================================================
-    // GETTER
-    // ==================================================
+    // ========================================================
+    // Getter
+    // ========================================================
 
     public String getOperatingSystem() {
 
         return operatingSystem;
     }
 
-
-    // ==================================================
-    // SETTER
-    // ==================================================
+    // ========================================================
+    // Setter
+    // ========================================================
 
     public void setOperatingSystem(String operatingSystem) {
 
         this.operatingSystem = operatingSystem;
     }
 
-
-    // ==================================================
-    // METHOD OVERRIDING
-    // ==================================================
+    // ========================================================
+    // CONCEPT: Method Overriding
+    // ========================================================
 
     @Override
     public void displayDetails() {
-
-        // Calls parent implementation first.
 
         super.displayDetails();
 
@@ -98,15 +78,12 @@ public class Phone extends ElectronicsProduct {
         );
     }
 
-
-    // ==================================================
-    // METHOD OVERRIDING
-    // ==================================================
+    // ========================================================
+    // CONCEPT: Method Overriding
+    // ========================================================
 
     @Override
     public double calculateFinalPrice() {
-
-        // Phone has a 3% additional charge.
 
         return getPrice() * 1.03;
     }

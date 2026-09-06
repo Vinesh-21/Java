@@ -1,87 +1,72 @@
-// ======================================================
-// INHERITANCE
-// ======================================================
+// ============================================================
+// GROCERYPRODUCT.JAVA
+// ============================================================
+// TOPICS COVERED:
 //
-// Product
-//    ↓
-// GroceryProduct
-//
-// GroceryProduct IS-A Product
-// ======================================================
+// 1. Inheritance
+// 2. super()
+// 3. this
+// 4. Method Overriding
+// 5. Polymorphism
+// ============================================================
 
 public class GroceryProduct extends Product {
 
     private String expiryDate;
 
-
-    // ==================================================
-    // DEFAULT CONSTRUCTOR
-    // ==================================================
+    // ========================================================
+    // Constructor
+    // ========================================================
 
     public GroceryProduct() {
 
         super();
     }
 
+    // ========================================================
+    // Parameterized Constructor
+    // ========================================================
 
-    // ==================================================
-    // PARAMETERIZED CONSTRUCTOR
-    // ==================================================
+    public GroceryProduct(int productId,
+                          String productName,
+                          double price,
+                          int quantity,
+                          String expiryDate) {
 
-    public GroceryProduct(
-            int productId,
-            String productName,
-            double price,
-            int quantity,
-            String expiryDate) {
-
-
-        // ==================================================
-        // super()
-        // ==================================================
-        // Calls Product constructor.
-        // ==================================================
-
-        super(
-                productId,
+        // CONCEPT: super()
+        super(productId,
                 productName,
                 price,
-                quantity
-        );
+                quantity);
 
-
+        // CONCEPT: this
         this.expiryDate = expiryDate;
     }
 
-
-    // ==================================================
-    // GETTER
-    // ==================================================
+    // ========================================================
+    // Getter
+    // ========================================================
 
     public String getExpiryDate() {
 
         return expiryDate;
     }
 
-
-    // ==================================================
-    // SETTER
-    // ==================================================
+    // ========================================================
+    // Setter
+    // ========================================================
 
     public void setExpiryDate(String expiryDate) {
 
         this.expiryDate = expiryDate;
     }
 
-
-    // ==================================================
-    // METHOD OVERRIDING
-    // ==================================================
+    // ========================================================
+    // CONCEPT: Method Overriding
+    // ========================================================
 
     @Override
     public void displayDetails() {
-
-        // Calls Product.displayDetails()
 
         super.displayDetails();
 
@@ -91,15 +76,12 @@ public class GroceryProduct extends Product {
         );
     }
 
-
-    // ==================================================
-    // METHOD OVERRIDING
-    // ==================================================
+    // ========================================================
+    // CONCEPT: Method Overriding
+    // ========================================================
 
     @Override
     public double calculateFinalPrice() {
-
-        // Grocery has no additional charge.
 
         return getPrice();
     }

@@ -1,521 +1,101 @@
-import java.util.Scanner;
+// ============================================================
+// INVENTORY.JAVA
+// ============================================================
+// TOPICS COVERED:
+//
+// OOP:
+// 1. Interface
+// 2. Polymorphism
+// 3. Upcasting
+// 4. Downcasting
+// 5. instanceof
+//
+// COLLECTIONS:
+// 6. List
+// 7. Set
+// 8. Map
+//
+// STREAMS:
+// 9. map()
+// 10. filter()
+// 11. reduce()
+// 12. sorted()
+//
+// OTHER:
+// 13. Optional
+// 14. Method References
+// 15. Lambda Expressions
+// ============================================================
 
-public class Inventory {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
-    // ==================================================
-    // POLYMORPHISM
-    // ==================================================
-    // The array uses the parent type Product.
+// ============================================================
+// CONCEPT: Interface Implementation
+// ============================================================
+
+public class Inventory
+        implements Searchable<Product> {
+
+    // ========================================================
+    // CONCEPT: Collection - List
+    // ========================================================
+    // List allows us to store multiple Product objects.
+
+    private List<Product> products;
+
+    // ========================================================
+    // CONCEPT: Collection - Map
+    // ========================================================
+    // Map stores:
     //
-    // It can store:
-    // Laptop
-    // Phone
-    // GroceryProduct
-    // Product
-    //
-    // because all of them are Products.
-    // ==================================================
+    // Product ID -> Product object
 
-    private Product[] products;
+    private Map<Integer, Product> productMap;
 
-    private int productCount;
+    // ========================================================
+    // Constructor
+    // ========================================================
 
-    private Scanner sc;
+    public Inventory() {
 
+        products = new ArrayList<>();
 
-    // ==================================================
-    // CONSTRUCTOR
-    // ==================================================
-
-    public Inventory(Scanner sc) {
-
-        // Uses final constant from Product.
-
-        this.products =
-                new Product[Product.MAX_PRODUCTS];
-
-        this.productCount = 0;
-
-        this.sc = sc;
+        productMap = new HashMap<>();
     }
 
-
-    // ==================================================
-    // METHOD OVERLOADING - VERSION 1
-    // ==================================================
-    // addProduct(Product)
-    // ==================================================
+    // ========================================================
+    // Add product
+    // ========================================================
 
     public void addProduct(Product product) {
 
-        if (productCount >= products.length) {
+        products.add(product);
 
-            System.out.println(
-                    "Inventory is full."
-            );
-
-            return;
-        }
-
-
-        products[productCount] = product;
-
-        productCount++;
-
-        System.out.println(
-                "Product added successfully."
+        productMap.put(
+                product.getProductId(),
+                product
         );
     }
 
-
-    // ==================================================
-    // METHOD OVERLOADING - VERSION 2
-    // ==================================================
+    // ========================================================
+    // CONCEPT: Method Overloading
+    // ========================================================
     // Same method name.
     // Different parameter list.
-    //
-    // This demonstrates METHOD OVERLOADING.
-    // ==================================================
 
-    public void addProduct(
-            int id,
-            String name,
-            double price,
-            int quantity) {
-
+    public void addProduct(int id,
+                           String name,
+                           double price,
+                           int quantity,
+                           String expiryDate) {
 
         Product product =
-                new Product(
-                        id,
-                        name,
-                        price,
-                        quantity
-                );
-
-
-        // Calls overloaded addProduct(Product)
-
-        addProduct(product);
-    }
-
-
-    // ==================================================
-    // VIEW PRODUCTS
-    // ==================================================
-
-    public void viewProducts() {
-
-        System.out.println();
-        System.out.println(
-                "===== PRODUCTS ====="
-        );
-
-
-        if (productCount == 0) {
-
-            System.out.println(
-                    "No products available."
-            );
-
-            return;
-        }
-
-
-        for (int i = 0; i < productCount; i++) {
-
-            System.out.println();
-
-            System.out.println(
-                    "----- Product "
-                            + (i + 1)
-                            + " -----"
-            );
-
-
-            // ==================================================
-            // POLYMORPHISM
-            // ==================================================
-            // Product reference points to an actual child
-            // object.
-            // ==================================================
-
-            Product product = products[i];
-
-
-            // ==================================================
-            // DYNAMIC METHOD DISPATCH
-            // ==================================================
-            // Java determines which displayDetails()
-            // implementation to call at RUNTIME.
-            //
-            // If object = Laptop
-            //     Laptop.displayDetails()
-            //
-            // If object = Phone
-            //     Phone.displayDetails()
-            //
-            // If object = GroceryProduct
-            //     GroceryProduct.displayDetails()
-            // ==================================================
-
-            product.displayDetails();
-
-
-            System.out.println(
-                    "Stock Status : "
-                            + product.getStockStatus()
-            );
-
-
-            // ==================================================
-            // DYNAMIC METHOD DISPATCH
-            // ==================================================
-            // The actual object's overridden
-            // calculateFinalPrice() executes.
-            // ==================================================
-
-            System.out.printf(
-                    "Final Price  : ₹%.2f%n",
-                    product.calculateFinalPrice()
-            );
-        }
-    }
-
-
-    // ==================================================
-    // SEARCH PRODUCT
-    // ==================================================
-
-    public void searchProduct() {
-
-        System.out.print(
-                "Enter Product ID: "
-        );
-
-        int id = sc.nextInt();
-
-
-        Product foundProduct = null;
-
-
-        for (int i = 0; i < productCount; i++) {
-
-            if (
-                    products[i].getProductId()
-                            == id
-            ) {
-
-                foundProduct = products[i];
-
-                break;
-            }
-        }
-
-
-        System.out.println();
-
-
-        if (foundProduct != null) {
-
-            System.out.println(
-                    "Product Found"
-            );
-
-            System.out.println();
-
-
-            // POLYMORPHISM
-            // Calls correct overridden method.
-
-            foundProduct.displayDetails();
-
-
-            System.out.println(
-                    "Stock Status : "
-                            + foundProduct.getStockStatus()
-            );
-
-        } else {
-
-            System.out.println(
-                    "Product not found."
-            );
-        }
-    }
-
-
-    // ==================================================
-    // CALCULATE INVENTORY VALUE
-    // ==================================================
-
-    public void calculateInventoryValue() {
-
-        double totalValue = 0;
-
-
-        for (int i = 0; i < productCount; i++) {
-
-            totalValue +=
-                    products[i].getInventoryValue();
-        }
-
-
-        System.out.println();
-
-        System.out.println(
-                "===== INVENTORY VALUE ====="
-        );
-
-        System.out.printf(
-                "Total Inventory Value: ₹%.2f%n",
-                totalValue
-        );
-    }
-
-
-    // ==================================================
-    // SHOW LOW STOCK PRODUCTS
-    // ==================================================
-
-    public void showLowStockProducts() {
-
-        System.out.println();
-
-        System.out.println(
-                "===== LOW STOCK PRODUCTS ====="
-        );
-
-
-        boolean found = false;
-
-
-        for (int i = 0; i < productCount; i++) {
-
-            Product product = products[i];
-
-
-            if (product.getQuantity() <= 5) {
-
-                System.out.println(
-                        product.getProductName()
-                                + " → "
-                                + product.getQuantity()
-                );
-
-                found = true;
-            }
-        }
-
-
-        if (!found) {
-
-            System.out.println(
-                    "No low stock products."
-            );
-        }
-    }
-
-
-    // ==================================================
-    // ADD LAPTOP
-    // ==================================================
-
-    public void addLaptop() {
-
-        System.out.print(
-                "Enter Product ID: "
-        );
-
-        int id = sc.nextInt();
-
-
-        System.out.print(
-                "Enter Product Name: "
-        );
-
-        String name = sc.next();
-
-
-        System.out.print(
-                "Enter Price: "
-        );
-
-        double price = sc.nextDouble();
-
-
-        System.out.print(
-                "Enter Quantity: "
-        );
-
-        int quantity = sc.nextInt();
-
-
-        System.out.print(
-                "Enter Warranty Years: "
-        );
-
-        int warranty = sc.nextInt();
-
-
-        System.out.print(
-                "Enter RAM (GB): "
-        );
-
-        int ram = sc.nextInt();
-
-
-        System.out.print(
-                "Enter Storage (GB): "
-        );
-
-        int storage = sc.nextInt();
-
-
-        // ==================================================
-        // OBJECT CREATION
-        // ==================================================
-
-        Laptop laptop =
-                new Laptop(
-                        id,
-                        name,
-                        price,
-                        quantity,
-                        warranty,
-                        ram,
-                        storage
-                );
-
-
-        // ==================================================
-        // UPCASTING
-        // ==================================================
-        // Laptop → Product
-        //
-        // A Laptop IS-A Product.
-        // Therefore this is safe.
-        // ==================================================
-
-        Product product = laptop;
-
-
-        // Product reference now points to Laptop object.
-
-        addProduct(product);
-    }
-
-
-    // ==================================================
-    // ADD PHONE
-    // ==================================================
-
-    public void addPhone() {
-
-        System.out.print(
-                "Enter Product ID: "
-        );
-
-        int id = sc.nextInt();
-
-
-        System.out.print(
-                "Enter Product Name: "
-        );
-
-        String name = sc.next();
-
-
-        System.out.print(
-                "Enter Price: "
-        );
-
-        double price = sc.nextDouble();
-
-
-        System.out.print(
-                "Enter Quantity: "
-        );
-
-        int quantity = sc.nextInt();
-
-
-        System.out.print(
-                "Enter Warranty Years: "
-        );
-
-        int warranty = sc.nextInt();
-
-
-        System.out.print(
-                "Enter Operating System: "
-        );
-
-        String os = sc.next();
-
-
-        Phone phone =
-                new Phone(
-                        id,
-                        name,
-                        price,
-                        quantity,
-                        warranty,
-                        os
-                );
-
-
-        // ==================================================
-        // UPCASTING
-        // ==================================================
-
-        Product product = phone;
-
-        addProduct(product);
-    }
-
-
-    // ==================================================
-    // ADD GROCERY PRODUCT
-    // ==================================================
-
-    public void addGroceryProduct() {
-
-        System.out.print(
-                "Enter Product ID: "
-        );
-
-        int id = sc.nextInt();
-
-
-        System.out.print(
-                "Enter Product Name: "
-        );
-
-        String name = sc.next();
-
-
-        System.out.print(
-                "Enter Price: "
-        );
-
-        double price = sc.nextDouble();
-
-
-        System.out.print(
-                "Enter Quantity: "
-        );
-
-        int quantity = sc.nextInt();
-
-
-        System.out.print(
-                "Enter Expiry Date: "
-        );
-
-        String expiryDate = sc.next();
-
-
-        GroceryProduct grocery =
                 new GroceryProduct(
                         id,
                         name,
@@ -524,29 +104,244 @@ public class Inventory {
                         expiryDate
                 );
 
-
-        // ==================================================
-        // UPCASTING
-        // ==================================================
-
-        Product product = grocery;
-
         addProduct(product);
     }
 
+    // ========================================================
+    // View products
+    // ========================================================
 
-    // ==================================================
-    // DOWNCASTING
-    // ==================================================
-    // Product → Laptop
+    public void viewProducts() {
+
+        System.out.println(
+                "\n===== ALL PRODUCTS ====="
+        );
+
+        // ====================================================
+        // CONCEPT: Lambda Expression
+        // ====================================================
+        // product -> ...
+        //
+        // This is a lambda expression.
+
+        products.forEach(product -> {
+
+            // =================================================
+            // CONCEPT: Polymorphism / Dynamic Method Dispatch
+            // =================================================
+            //
+            // product is Product reference.
+            //
+            // Actual object may be:
+            // Laptop
+            // Phone
+            // GroceryProduct
+            //
+            // Java calls the correct overridden method.
+
+            product.displayDetails();
+
+            System.out.println(
+                    "Final Price: ₹"
+                            + product.calculateFinalPrice()
+            );
+
+            System.out.println(
+                    "------------------------"
+            );
+        });
+    }
+
+    // ========================================================
+    // CONCEPT: Interface method
+    // ========================================================
+
+    @Override
+    public Product search(int id) {
+
+        return productMap.get(id);
+    }
+
+    // ========================================================
+    // CONCEPT: Optional
+    // ========================================================
+    // Optional helps us represent:
     //
-    // Downcasting should only happen when the actual
-    // object is really a Laptop.
-    // ==================================================
+    // "A product may or may not exist."
+
+    public Optional<Product> findProduct(int id) {
+
+        return Optional.ofNullable(
+                productMap.get(id)
+        );
+    }
+
+    // ========================================================
+    // CONCEPT: Stream filter()
+    // ========================================================
+    //
+    // Select only products whose quantity <= 5.
+
+    public void showLowStockProducts() {
+
+        System.out.println(
+                "\n===== LOW STOCK PRODUCTS ====="
+        );
+
+        products.stream()
+
+                .filter(product ->
+                        product.getQuantity() <= 5)
+
+                // =================================================
+                // CONCEPT: Method Reference
+                // =================================================
+                // Same as:
+                //
+                // product -> product.displayDetails()
+
+                .forEach(
+                        Product::displayDetails
+                );
+    }
+
+    // ========================================================
+    // CONCEPT: Stream map()
+    // ========================================================
+    //
+    // Convert Product objects into product names.
+
+    public void showProductNames() {
+
+        System.out.println(
+                "\n===== PRODUCT NAMES ====="
+        );
+
+        products.stream()
+
+                .map(Product::getProductName)
+
+                .forEach(System.out::println);
+    }
+
+    // ========================================================
+    // CONCEPT: Stream reduce()
+    // ========================================================
+    //
+    // Calculate total inventory value.
+
+    public double calculateInventoryValue() {
+
+        return products.stream()
+
+                .map(Product::getInventoryValue)
+
+                .reduce(
+                        0.0,
+                        Double::sum
+                );
+    }
+
+    // ========================================================
+    // CONCEPT: Stream sorted()
+    // ========================================================
+
+    public void sortProductsByPrice() {
+
+        System.out.println(
+                "\n===== PRODUCTS SORTED BY PRICE ====="
+        );
+
+        products.stream()
+
+                .sorted(
+                        (p1, p2) ->
+                                Double.compare(
+                                        p1.getPrice(),
+                                        p2.getPrice()
+                                )
+                )
+
+                .forEach(
+                        Product::displayDetails
+                );
+    }
+
+    // ========================================================
+    // CONCEPT: Collection - Set
+    // ========================================================
+    //
+    // Set does not allow duplicate values.
+
+    public void showUniqueProductNames() {
+
+        System.out.println(
+                "\n===== UNIQUE PRODUCT NAMES ====="
+        );
+
+        Set<String> names =
+                new HashSet<>();
+
+        products.forEach(
+                product ->
+                        names.add(
+                                product.getProductName()
+                        )
+        );
+
+        names.forEach(
+                System.out::println
+        );
+    }
+
+    // ========================================================
+    // CONCEPT: Map
+    // ========================================================
+
+    public void showProductMap() {
+
+        System.out.println(
+                "\n===== PRODUCT MAP ====="
+        );
+
+        productMap.forEach(
+                (id, product) ->
+                        System.out.println(
+                                id
+                                        + " -> "
+                                        + product.getProductName()
+                        )
+        );
+    }
+
+    // ========================================================
+    // CONCEPT: Polymorphism
+    // ========================================================
+
+    public void demonstratePolymorphism() {
+
+        System.out.println(
+                "\n===== POLYMORPHISM ====="
+        );
+
+        for (Product product : products) {
+
+            System.out.println(
+                    product.getProductName()
+                            + " -> ₹"
+                            + product.calculateFinalPrice()
+            );
+        }
+    }
+
+    // ========================================================
+    // CONCEPT: Downcasting
+    // CONCEPT: instanceof
+    // ========================================================
 
     public void demonstrateDowncasting() {
 
-        if (productCount == 0) {
+        if (products.isEmpty()) {
 
             System.out.println(
                     "No products available."
@@ -555,31 +350,29 @@ public class Inventory {
             return;
         }
 
+        // ====================================================
+        // CONCEPT: Upcasting
+        // ====================================================
+        // Actual object may be Laptop.
+        //
+        // But reference is Product.
 
-        Product product = products[0];
+        Product product = products.get(0);
 
-
-        // ==================================================
-        // instanceof
-        // ==================================================
-        // Checks the actual object type before
-        // performing downcasting.
-        // ==================================================
+        // ====================================================
+        // CONCEPT: instanceof
+        // ====================================================
+        // Check the actual object before downcasting.
 
         if (product instanceof Laptop) {
 
-
-            // ==================================================
-            // DOWNCASTING
-            // ==================================================
-            // Product → Laptop
-            // ==================================================
+            // =================================================
+            // CONCEPT: Downcasting
+            // =================================================
+            // Product reference -> Laptop reference
 
             Laptop laptop =
                     (Laptop) product;
-
-
-            // Now Laptop-specific methods are available.
 
             System.out.println(
                     "Laptop RAM: "
@@ -587,18 +380,38 @@ public class Inventory {
                             + " GB"
             );
 
-
             System.out.println(
                     "Laptop Storage: "
                             + laptop.getStorage()
                             + " GB"
             );
 
+        } else if (product instanceof Phone) {
+
+            // Downcasting Product -> Phone
+
+            Phone phone =
+                    (Phone) product;
+
+            System.out.println(
+                    "Phone OS: "
+                            + phone.getOperatingSystem()
+            );
+
         } else {
 
             System.out.println(
-                    "First product is not a Laptop."
+                    "First product is not Laptop or Phone."
             );
         }
+    }
+
+    // ========================================================
+    // Getter
+    // ========================================================
+
+    public List<Product> getProducts() {
+
+        return products;
     }
 }

@@ -1,110 +1,80 @@
-// ======================================================
-// INHERITANCE
-// ======================================================
-// ElectronicsProduct extends Product.
+// ============================================================
+// ELECTRONICSPRODUCT.JAVA
+// ============================================================
+// TOPICS COVERED:
 //
-// Therefore:
-//
-// ElectronicsProduct IS-A Product
-//
-// ElectronicsProduct inherits Product's:
-// - productId
-// - productName
-// - price
-// - quantity
-// - getters
-// - setters
-// - methods
-// ======================================================
+// 1. Inheritance
+// 2. super()
+// 3. Method Overriding
+// 4. Abstraction
+// ============================================================
 
-public class ElectronicsProduct extends Product {
+// CONCEPT: Inheritance
+// ElectronicsProduct inherits from Product.
+
+public abstract class ElectronicsProduct extends Product {
 
     private int warrantyYears;
 
-
-    // ==================================================
-    // DEFAULT CONSTRUCTOR
-    // ==================================================
+    // ========================================================
+    // CONCEPT: Constructor
+    // CONCEPT: super()
+    // ========================================================
 
     public ElectronicsProduct() {
 
-        // super() calls the parent Product constructor.
+        // Calls Product's default constructor.
         super();
     }
 
+    // ========================================================
+    // CONCEPT: Parameterized Constructor
+    // CONCEPT: super()
+    // ========================================================
 
-    // ==================================================
-    // PARAMETERIZED CONSTRUCTOR
-    // ==================================================
+    public ElectronicsProduct(int productId,
+                              String productName,
+                              double price,
+                              int quantity,
+                              int warrantyYears) {
 
-    public ElectronicsProduct(
-            int productId,
-            String productName,
-            double price,
-            int quantity,
-            int warrantyYears) {
-
-
-        // ==================================================
-        // super(...)
-        // ==================================================
+        // CONCEPT: super
         // Calls the parent Product constructor.
-        //
-        // Parent receives:
-        // productId
-        // productName
-        // price
-        // quantity
-        // ==================================================
-
-        super(
-                productId,
+        super(productId,
                 productName,
                 price,
-                quantity
-        );
-
-
-        // this refers to the current ElectronicsProduct
-        // object.
+                quantity);
 
         this.warrantyYears = warrantyYears;
     }
 
-
-    // ==================================================
-    // GETTER
-    // ==================================================
+    // ========================================================
+    // CONCEPT: Getter
+    // ========================================================
 
     public int getWarrantyYears() {
 
         return warrantyYears;
     }
 
-
-    // ==================================================
-    // SETTER
-    // ==================================================
+    // ========================================================
+    // CONCEPT: Setter
+    // ========================================================
 
     public void setWarrantyYears(int warrantyYears) {
 
         this.warrantyYears = warrantyYears;
     }
 
-
-    // ==================================================
-    // METHOD OVERRIDING
-    // ==================================================
-    // Product already has displayDetails().
-    //
-    // ElectronicsProduct provides its own version.
-    // ==================================================
+    // ========================================================
+    // CONCEPT: Method Overriding
+    // ========================================================
 
     @Override
     public void displayDetails() {
 
-        // super.displayDetails()
-        // calls the parent Product implementation.
+        // CONCEPT: super
+        // Call the parent class implementation first.
 
         super.displayDetails();
 
@@ -113,22 +83,5 @@ public class ElectronicsProduct extends Product {
                         + warrantyYears
                         + " years"
         );
-    }
-
-
-    // ==================================================
-    // METHOD OVERRIDING
-    // ==================================================
-    // ElectronicsProduct changes the behavior of
-    // calculateFinalPrice().
-    // ==================================================
-
-    @Override
-    public double calculateFinalPrice() {
-
-        // Example:
-        // Electronics have a 5% additional charge.
-
-        return getPrice() * 1.05;
     }
 }

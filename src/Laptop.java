@@ -1,26 +1,32 @@
-// ======================================================
-// MULTILEVEL INHERITANCE
-// ======================================================
+// ============================================================
+// LAPTOP.JAVA
+// ============================================================
+// TOPICS COVERED:
+//
+// 1. Inheritance
+// 2. Multilevel Inheritance
+// 3. super()
+// 4. this
+// 5. Method Overriding
+// 6. Polymorphism
+// ============================================================
+
+// CONCEPT: Multilevel Inheritance
 //
 // Product
 //    ↓
 // ElectronicsProduct
 //    ↓
 // Laptop
-//
-// Laptop IS-A ElectronicsProduct
-// Laptop IS-A Product
-// ======================================================
 
 public class Laptop extends ElectronicsProduct {
 
     private int ram;
     private int storage;
 
-
-    // ==================================================
-    // DEFAULT CONSTRUCTOR
-    // ==================================================
+    // ========================================================
+    // CONCEPT: Constructor
+    // ========================================================
 
     public Laptop() {
 
@@ -28,117 +34,77 @@ public class Laptop extends ElectronicsProduct {
         super();
     }
 
+    // ========================================================
+    // CONCEPT: Parameterized Constructor
+    // CONCEPT: super()
+    // CONCEPT: this
+    // ========================================================
 
-    // ==================================================
-    // PARAMETERIZED CONSTRUCTOR
-    // ==================================================
+    public Laptop(int productId,
+                  String productName,
+                  double price,
+                  int quantity,
+                  int warrantyYears,
+                  int ram,
+                  int storage) {
 
-    public Laptop(
-            int productId,
-            String productName,
-            double price,
-            int quantity,
-            int warrantyYears,
-            int ram,
-            int storage) {
-
-
-        // ==================================================
-        // super(...)
-        // ==================================================
-        // Calls ElectronicsProduct constructor.
-        //
-        // ElectronicsProduct will then call
-        // Product's constructor.
-        // ==================================================
-
-        super(
-                productId,
+        // Send common information to parent.
+        super(productId,
                 productName,
                 price,
                 quantity,
-                warrantyYears
-        );
+                warrantyYears);
 
-
-        // ==================================================
-        // this
-        // ==================================================
-        // this.ram = instance variable
-        // ram      = parameter
-        // ==================================================
-
+        // 'this' refers to current Laptop object.
         this.ram = ram;
         this.storage = storage;
     }
 
-
-    // ==================================================
-    // GETTERS
-    // ==================================================
+    // ========================================================
+    // Getters
+    // ========================================================
 
     public int getRam() {
-
         return ram;
     }
 
     public int getStorage() {
-
         return storage;
     }
 
-
-    // ==================================================
-    // SETTERS
-    // ==================================================
+    // ========================================================
+    // Setters
+    // ========================================================
 
     public void setRam(int ram) {
-
         this.ram = ram;
     }
 
     public void setStorage(int storage) {
-
         this.storage = storage;
     }
 
-
-    // ==================================================
-    // METHOD OVERRIDING
-    // ==================================================
+    // ========================================================
+    // CONCEPT: Method Overriding
+    // ========================================================
 
     @Override
     public void displayDetails() {
 
-        // Calls ElectronicsProduct's displayDetails().
-        //
-        // That method itself calls Product's
-        // displayDetails().
-
+        // Call parent displayDetails()
         super.displayDetails();
 
-        System.out.println(
-                "RAM      : "
-                        + ram
-                        + " GB"
-        );
-
-        System.out.println(
-                "Storage  : "
-                        + storage
-                        + " GB"
-        );
+        System.out.println("RAM      : " + ram + " GB");
+        System.out.println("Storage  : " + storage + " GB");
     }
 
-
-    // ==================================================
-    // METHOD OVERRIDING
-    // ==================================================
+    // ========================================================
+    // CONCEPT: Method Overriding
+    // ========================================================
+    // Laptop has its own final price calculation.
 
     @Override
     public double calculateFinalPrice() {
-
-        // Laptop has an 8% additional charge.
 
         return getPrice() * 1.08;
     }
